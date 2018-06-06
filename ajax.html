@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- 引入jQuery依赖 -->
+    <script src='http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js'></script>
+    <!-- 引入表单验证库 -->
+    <script src='http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js'></script>
+    <!-- 引入中文提示包 -->
+    <script src='http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js'></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        form {
+            width: 1000px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: lightgoldenrodyellow;
+            font-size: 20px;
+        }
+
+        div {
+            margin: 30px;
+        }
+
+        input {
+            width: 400px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        #username {
+            margin-left: 60px;
+        }
+
+        #userkey {
+            margin-left: 80px;
+        }
+
+        #useremail {
+            margin-left: 80px;
+        }
+
+        #checkbox {
+            margin-left: 10px;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .submit {
+            margin-left: 80px;
+            font-size: 16px;
+        }
+
+        .error {
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="" id='userform' method="get" class="cmxform">
+        <div>
+            <label for="username">用户名</label>
+            <input type="text" id='username' name='username' placeholder="请输入用户名">
+            <span>是否为必填</span>
+            <input type="checkbox" id='checkbox' name='checkbox'>
+        </div>
+        <div>
+            <label for="userkey">密码</label>
+            <input type="password" id='userkey' name='userkey' placeholder="请输入密码">
+        </div>
+        <div>
+            <label for="reuserkey">重新输入密码</label>
+            <input type="password" id='reuserkey' name='reuserkey' placeholder="请重新输入密码">
+        </div>
+        <div>
+            <label for="useremail">邮箱</label>
+            <input type="email" id='useremail' name='useremail' placeholder="请输入邮箱">
+        </div>
+        <div>
+            <input type="submit" class='submit' value='提交'>
+        </div>
+    </form>
+    <script>
+        $().ready(function () {
+            $("#userform").validate({
+                submitHandler: function (form) {
+                 var options={
+                     dataType:'json',
+                     success:function(responseText,statusText,xhr,$form){
+                         alert('ajax返回成功了');//ajax返回成功时进行一些处理
+                     }
+                 };
+                 $(form).ajaxSubmit(options);
+                },
+                rules: {
+                    //属性形式required: “#aa:checked
+                    username: {
+                        required: '#checkbox:checked',
+                        minlength: 3
+                    },
+                    userkey: {
+                        required: true,
+                        minlength: 6
+                    },
+                    reuserkey: {
+                        required: true,
+                        equalTo: "#userkey"
+                    },
+                    useremail: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    username: {
+                        required: '亲，您选择了必填就一定要填哦',
+                        minlength: '亲，至少三个字符哦'
+                    },
+                    userkey: {
+                        required: '亲，请输入密码哦',
+                        minlength: '亲，密码至少六位哦'
+                    },
+                    reuserkey: {
+                        required: '请重新输入密码哦',
+                        equalTo: '亲，您好好检查一下，和上次密码输入不一致哦'
+                    },
+                    useremail: {
+                        required: '亲，您需要输入邮箱哦，方便我们联系您',
+                        email: '亲，您的邮箱格式要正确哦'
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

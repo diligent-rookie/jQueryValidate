@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<script src='http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js'></script>
+<!-- 引入表单验证库 -->
+<script src='http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js'></script>
+<!-- 引入中文提示包 -->
+<script src='http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js'></script>
+<style>
+    *{padding:0;margin:0;}
+    form{
+        width: 600px;
+        margin:100px auto;
+        text-align:center;
+        font-size:16px;
+        background-color:honeydew;
+    }
+    input{
+        width: 390px;
+        height: 40px;
+        margin:30px 0;
+        padding-left:10px;
+    }
+    input[type='submit']{
+        margin-left:49px;
+    }
+    #erro div{
+        width: 400px;
+        height: 40px;
+        border-radius:20px;
+        margin:10px auto;
+        background-color:orange;
+        line-height:40px;
+        text-align:center;
+        font-size:16px;
+        color:red;
+    }
+</style>
+</head>
+<body>
+    <form action="" id='errorform' method="get">
+        <div>
+            <label for="name">用户名</label>
+            <input type="text" id='name' name='name' placeholder='请输入用户名'>
+        </div>
+        <div>
+            <label for="psd">密&nbsp;&nbsp;码</label>
+            <input type="password" id='psd' name='psd' placeholder='请输入密码'>
+        </div>
+        <input type="submit" value='提交'><br><br>
+         <div id="erro"></span>
+    </form>
+    <script>
+        $(function(){
+            $("#errorform").validate({
+                //设置里debug参数，即使验证通过了也不会提交表单,方便调试
+                debug:true,
+                errorClass:'myError',
+                errorElement:'p',
+                wrapper:'div',
+                errorLabelContainer:$("#erro"),
+                errorPlacement:function(error,element){
+                    // error.appendTo(element.parent());默认位置
+                    error.appendTo($("#erro"))
+                },
+                rules:{
+                    name:{
+                        required:true,
+                        minlength:3
+                    },
+                    psd:{
+                        required:true,
+                        minlength:6
+                    }
+                },
+                messages:{
+                     name:{
+                        required:'亲，您的用户名记得填哦',
+                        minlength:'亲，您的用户名至少三个字符哦'
+                    },
+                    psd:{
+                        required:'亲，您的密码记得要填哦',
+                        minlength:'亲，您的密码至少六位哦'
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>
